@@ -56,12 +56,12 @@ module clock_divider(
 	parameter COUNTER_SIZE = 23;
 	
 	reg [31:0] count;
-	wire [7:0] ram_out;
+	wire [7:0] rom_out;
 	
 	ROM	ROM_inst (
 		.address ( 0 ),
 		.clock ( fast_clock ),
-		.q ( ram_out )
+		.q ( rom_out )
 	);
 	
 	always @ (posedge fast_clock)
@@ -69,6 +69,6 @@ module clock_divider(
 			count <= count + 1'b1;
 	end
 
-	assign slow_clock = speed_sw ? count[COUNTER_SIZE-1] : count[ram_out];
+	assign slow_clock = speed_sw ? count[COUNTER_SIZE-1] : count[rom_out];
 
 endmodule 
